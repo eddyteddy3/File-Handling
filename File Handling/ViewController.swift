@@ -31,12 +31,19 @@ class ViewController: UIViewController {
         if fileMng.fileExists(atPath: dataFile) { //check whether the file path exists
             if let dataBuffer = fileMng.contents(atPath: dataFile) { //getting the contents of file
                 let dataString = NSString(data: dataBuffer, encoding: String.Encoding.utf8.rawValue)
+                print("data read from file: \(dataString)")
                 textField.text = dataString as String?
             }
         }
     }
     
     @IBAction func saveText(_ sender: Any) {
+        
+        if let text = textField.text {
+            let dataBuffer = text.data(using: String.Encoding.utf8)
+            fileMng.createFile(atPath: dataFile, contents: dataBuffer, attributes: nil) //creates the file to the document directory
+        }
+        
     }
     
 }
